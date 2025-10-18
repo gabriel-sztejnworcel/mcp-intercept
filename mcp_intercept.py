@@ -15,6 +15,7 @@ _client_lock = threading.Lock()
 _client_joined = False
 _shutdown_event = threading.Event()
 _original_stdout = sys.stdout  # keep protocol writes here
+sys.stdout = sys.stderr  # redirect protocol writes to stderr
 
 
 def drain_stderr(proc):
@@ -24,7 +25,7 @@ def drain_stderr(proc):
             msg = proc.stderr.readline()
             if not msg:
                 break
-            sys.stderr.write(msg)
+            sys.stderr.buffer.write(msg.encode("utf-8"))
             sys.stderr.flush()
     except (BrokenPipeError, ValueError, OSError) as e:
         logging.warning(f"Error draining stderr: {e}")
@@ -32,10 +33,10 @@ def drain_stderr(proc):
         logging.error(f"Unexpected error in drain_stderr: {e}")
 
 
-def on_message(client, server, message: str, proc):
+def on_message(client, server, msg: str, proc):
     """Forward WebSocket message to subprocess stdin."""
     try:
-        proc.stdin.write(message)
+        proc.stdin.buffer.write(msg.encode("utf-8"))
         proc.stdin.flush()
     except BrokenPipeError:
         logging.warning("Subprocess stdin closed; dropping message")
@@ -161,10 +162,10 @@ def ws_to_client_thread_func(ws):
     try:
         while True:
             try:
-                message = ws.recv()
-                if not message:
+                msg = ws.recv()
+                if not msg:
                     break
-                _original_stdout.write(message)
+                _original_stdout.buffer.write(msg.encode("utf-8"))
                 _original_stdout.flush()
             except (websocket.WebSocketConnectionClosedException,
                     websocket._exceptions.WebSocketTimeoutException,
@@ -251,7 +252,8 @@ def main():
                                 stderr=subprocess.PIPE,
                                 text=True,
                                 bufsize=1,
-                                env=env)
+                                env=env,
+                                encoding="utf-8")
 
         stderr_thread = threading.Thread(target=drain_stderr,
                                          args=(proc, ),
