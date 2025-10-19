@@ -109,6 +109,12 @@ Upon restart, Claude will launch `mcp-intercept`, which spawns your MCP server a
 
 ---
 
+## 📈 Example: Filesystem Server
+
+> ![Example Filesystem Server](mcp-intercept.gif)
+
+---
+
 ## 📜 License
 
 MIT License © 2025 Gabriel Sztejnworcel
