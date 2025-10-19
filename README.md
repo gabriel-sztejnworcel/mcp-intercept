@@ -14,8 +14,7 @@
 
 ## 📈 Architecture Diagram
 
-> **[Diagram placeholder]**  
-> _Insert an image (SVG/PNG) showing: Claude Desktop (MCP client) ↔ mcp-intercept (WS bridge) ↔ optional HTTP proxy ↔ Your MCP server (stdio)._
+> ![Architecture Diagram](mcp-intercept.png)
 
 ---
 
