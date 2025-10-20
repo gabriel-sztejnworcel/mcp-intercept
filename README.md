@@ -73,7 +73,7 @@ You can make `mcp-intercept` behave like a normal MCP server so Claude Desktop l
 ### 1) Locate the Claude MCP config
 
 - **macOS:** `~/Library/"Application Support"/Claude/claude_desktop_config.json`  
-- **Windows:** `%APPDATA%\Claude\mcp.json`
+- **Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ### 2) Add an entry for `mcp-intercept`
 
