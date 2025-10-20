@@ -29,7 +29,7 @@ cd mcp-intercept
 
 ### 2) Create and activate a virtual environment
 
-#### 🪟 On Windows (PowerShell)
+#### 🪟 On Windows
 
 ```powershell
 python -m venv .venv
