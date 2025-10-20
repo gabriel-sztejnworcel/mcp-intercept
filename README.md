@@ -81,7 +81,7 @@ You can make `mcp-intercept` behave like a normal MCP server so Claude Desktop l
 {
   "servers": {
     "mcp-intercept": {
-      "command": "python",
+      "command": "path/to/mcp-intercept/.venv/bin/python",
       "args": [
         "/path/to/mcp-intercept/mcp_intercept.py",
         "node",
